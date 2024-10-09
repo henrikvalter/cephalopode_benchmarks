@@ -1,0 +1,22 @@
+load (DIR^"../../input/fl/InputMinDistance.fl");
+
+let fp = fopen "MinDistance.h" "w";
+
+let pr1 dest [x,y,z] =
+    (fprintf fp "tmp = new_rec(&list_mgr);\n") fseq
+    (fprintf fp "tmp->x = Arbi_FromInt(%d);\n" x) fseq
+    (fprintf fp "tmp->y = Arbi_FromInt(%d);\n" y) fseq
+    (fprintf fp "tmp->z = Arbi_FromInt(%d);\n" z) fseq
+    (fprintf fp "tmp->next = %s;\n" dest) fseq
+    (fprintf fp "%s = tmp;\n" dest)
+;
+
+foreach (pr1 "locs") (rev locs);
+
+pr1 "my_loc" my_loc;
+
+fprintf fp "answer = Arbi_FromInt(%d);\n" answer;
+
+fclose fp;
+
+quit;

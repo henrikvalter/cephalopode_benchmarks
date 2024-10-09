@@ -1,0 +1,8 @@
+load (DIR^"../../input/fl/InputTriple.fl");
+
+let fp = fopen "Triple.h" "w";
+fprintf fp "n = Arbi_FromInt(%d);\n" n;
+fprintf fp "answer = Arbi_FromInt(%d);\n" answer;
+fclose fp;
+
+quit;

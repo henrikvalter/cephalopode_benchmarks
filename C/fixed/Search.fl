@@ -1,0 +1,20 @@
+load (DIR^"../../input/fl/InputSearch.fl");
+
+let fp = fopen "Search.h" "w";
+
+let pr1 i =
+    (fprintf fp "tmp = new_rec(&list_mgr);\n") fseq
+    (fprintf fp "tmp->v = Arbi_FromInt(%d);\n" i) fseq
+    (fprintf fp "tmp->next = xs;\n") fseq
+    (fprintf fp "xs = tmp;\n")
+;
+
+foreach pr1 (rev xs);
+
+fprintf fp "key = Arbi_FromInt(%d);\n" key;
+
+fprintf fp "answer = Arbi_FromInt(%d);\n" answer;
+
+fclose fp;
+
+quit;

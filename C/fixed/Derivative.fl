@@ -1,0 +1,18 @@
+load (DIR^"../../input/fl/InputDerivative.fl");
+
+let fp = fopen "Derivative.h" "w";
+
+let pr1 i =
+    (fprintf fp "tmp = new_rec(&list_mgr);\n") fseq
+    (fprintf fp "tmp->v = Arbi_FromInt(%d);\n" i) fseq
+    (fprintf fp "tmp->next = xs;\n") fseq
+    (fprintf fp "xs = tmp;\n")
+;
+
+foreach pr1 (rev xs);
+
+fprintf fp "answer = Arbi_FromInt(%d);\n" answer;
+
+fclose fp;
+
+quit;

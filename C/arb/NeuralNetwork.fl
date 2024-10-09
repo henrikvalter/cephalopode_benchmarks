@@ -1,0 +1,48 @@
+load (DIR^"../../input/fl/InputNeuralNetwork.fl");
+
+let fp = fopen "NeuralNetwork.h" "w";
+
+let pr_row dest cols =
+    (fprintf fp "%s = NULL;\n" dest) fseq
+    let p1 i =
+	(fprintf fp "tmp = new_rec(&list_mgr);\n") fseq
+	(fprintf fp "tmp->u.v = Arbi_FromInt(%d);\n" i) fseq
+	(fprintf fp "tmp->next = %s;\n" dest) fseq
+	(fprintf fp "%s = tmp;\n" dest)
+    in
+    (foreach p1 (rev cols))
+;
+
+let pr_matrix dest rows =
+    (fprintf fp "%s = NULL;\n" dest) fseq
+    let p1 row =
+	(pr_row "row" row) fseq
+	(fprintf fp "tmp = new_rec(&list_mgr);\n") fseq
+	(fprintf fp "tmp->u.p = row;\n") fseq
+	(fprintf fp "tmp->next = %s;\n" dest) fseq
+	(fprintf fp "%s = tmp;\n" dest)
+    in
+    (foreach p1 (rev rows))
+;
+
+let pr_bundles dest matrices =
+    (fprintf fp "%s = NULL;\n" dest) fseq
+    let p1 matrix =
+	(pr_matrix "matrix" matrix) fseq
+	(fprintf fp "tmp = new_rec(&list_mgr);\n") fseq
+	(fprintf fp "tmp->u.p = matrix;\n") fseq
+	(fprintf fp "tmp->next = %s;\n" dest) fseq
+	(fprintf fp "%s = tmp;\n" dest)
+    in
+    (foreach p1 (rev matrices))
+;
+
+pr_bundles "M" M;
+
+pr_row "vec" vec;
+
+fprintf fp "answer = Arbi_FromInt(%d);\n" answer;
+
+fclose fp;
+
+quit;

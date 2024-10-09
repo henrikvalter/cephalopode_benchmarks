@@ -1,0 +1,30 @@
+load (DIR^"../../input/fl/InputMatrixMulConst.fl");
+
+let fp = fopen "MatrixMulConst.h" "w";
+
+let emit_matrix dest m =
+    let N = length m in
+    let M = length (hd m) in
+    (fprintf fp "static arbi_T %s[%d][%d];\n" dest N M) fseq
+    (fprintf fp "static char *S_%s[%d][%d] = " dest N M) fseq
+    let p1 fp i = fprintf fp "\"%d\"" i in
+    let p_row fp r = list2fp fp T "{" ", " "}" p1 r in
+    list2fp fp T "{\n\t" ",\n\t" "\n};\n" p_row m
+;
+
+fprintf fp "static arbi_T v;\n";
+fprintf fp "static char * S_v = \"%d\";\n" v;
+
+emit_matrix "M1" M1;
+emit_matrix "answer" answer;
+
+let N = length M1;
+let M = length (hd M1);
+
+fprintf fp "static int dim1 = %d;\n" N;
+fprintf fp "static int dim2 = %d;\n\n" M;
+fprintf fp "static arbi_T my_result[%d][%d];\n\n" N M;
+
+fclose fp;
+
+quit;

@@ -1,0 +1,8 @@
+load (DIR^"../../input/fl/InputIdentity.fl");
+
+let fp = fopen "Identity.h" "w";
+fprintf fp "n = Arbi_FromInt(%d);\n" n;
+fprintf fp "answer = Arbi_FromInt(%d);\n" answer;
+fclose fp;
+
+quit;

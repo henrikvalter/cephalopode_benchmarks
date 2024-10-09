@@ -1,0 +1,32 @@
+load (DIR^"../../input/fl/InputConv.fl");
+
+let fp = fopen "Conv.h" "w";
+
+let emit_vector dest v =
+    let N = length v in
+    (fprintf fp "static arbi_T %s[%d];\n" dest N) fseq
+    (fprintf fp "static char *S_%s[%d] = " dest N) fseq
+    let p1 fp i = fprintf fp "\"%d\"" i in
+    list2fp fp T "{" ", " "};\n" p1 v
+;
+
+emit_vector "kernel" kernel;
+
+fprintf fp "static arbi_T stride;\n";
+fprintf fp "static char * S_stride = \"%d\";\n" stride;
+
+fprintf fp "static arbi_T bias;\n";
+fprintf fp "static char * S_bias = \"%d\";\n" bias;
+
+emit_vector "vec" vec;
+emit_vector "answer" answer;
+
+let N = length vec;
+fprintf fp "static int vdim = %d;\n" N;
+fprintf fp "static arbi_T my_res[%d];\n" N;
+
+fprintf fp "static int kdim = %d;\n" (length kernel);
+
+fclose fp;
+
+quit;

@@ -1,0 +1,19 @@
+load (DIR^"../../input/fl/InputDot.fl");
+
+let fp = fopen "Dot.h" "w";
+
+let pr1 var i =
+    (fprintf fp "tmp = new_rec(&list_mgr);\n") fseq
+    (fprintf fp "tmp->v = Arbi_FromInt(%d);\n" i) fseq
+    (fprintf fp "tmp->next = %s;\n" var) fseq
+    (fprintf fp "%s = tmp;\n" var)
+;
+
+foreach (pr1 "xs") (rev xs);
+foreach (pr1 "ys") (rev ys);
+
+fprintf fp "answer = Arbi_FromInt(%d);\n" answer;
+
+fclose fp;
+
+quit;
